@@ -10,6 +10,9 @@ ehthumbs.db
 ehthumbs_vista.db
 [Dd]esktop.ini
 
+# VSCode related files
+.vscode/
+
 # Python related files.
 *.pyc
 *.pyo
@@ -34,9 +37,6 @@ lint.txt
 saves/
 tmp/
 cache/
-game/saves/
-game/tmp/
-game/cache/
 
 # Executables.
 /renpy.exe

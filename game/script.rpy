@@ -57,9 +57,9 @@ image sample exp01_atl:
     contains:
         "sprite_border"
 
-image sample exp01 = FramedSprite("sample_exp01_cutin")
-image sample exp02 = FramedSprite("sample_exp02_cutin")
-image sample exp03 = FramedSprite("sample_exp03_cutin")
+image sample exp01 = SpriteCutout("sample_exp01", x=100, y=60, width=220, height=550, enter_dir='left', exit_dir='left')
+image sample exp02 = SpriteCutout("sample_exp02", x=100, y=60, width=220, height=550, enter_dir='left', exit_dir='left')
+image sample exp03 = SpriteCutout("sample_exp03", x=30, y=60, width=220, height=550, enter_dir='left', exit_dir='left')
 
 transform test_transform_01:
     zoom 0.9
@@ -156,15 +156,18 @@ label start:
         on replace:
             linear 0.5 xpos 0.5 # alpha 1.0
 
-        on hide:
+    with Pause(1)
+    show sample exp03 with dissolve:
+
+        on hide, replaced:
             xpos 0.5
             pause 0.1
-            easeout 0.4 xpos 0.45 alpha 0.0
-    with Pause(1)
-    show sample exp03 with dissolve
+            easeout 0.5 xpos 0.45 alpha 0.0
     with Pause(1)
     hide sample exp03
-    with Pause(1)
+    # For hiding after roll-back, the Pause() won't trigger the in-frame hide
+    # on roll-forward, but the renpy.pause() does.
+    $ renpy.pause(1)
 
     "That concludes the demonstration for now."
     "Please note that since the container is created solely to pass the events
