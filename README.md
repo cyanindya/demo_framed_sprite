@@ -5,15 +5,15 @@ This project contains basic example of a custom container for showing character 
 Put the project in Ren'Py project directory and run it from Ren'Py launcher.
 
 ## How to use
-The container class, the FramedSprite, is comprised of three images:
+The container class, the SpriteCutout, is comprised of three images:
 
- - the character sprite (or any images) with transform properties and event handlers defined using Ren'Py Animation and Transformation Language (ATL),
+ - the character sprite (or any images),
  - a background image (Frame-type displayable, defaults to image name "sprite_background"),
  - and a border image (Frame-type displayable, defaults to image name "sprite_border").
 
-To use the container, let's assume we already have the cropped character sprite under the name "sample_expression01_cropped". Define the image as follows:
+To use the container, let's assume we already have character sprite under the name "sample_expression01". Define the image as follows:
 
-    image sample expression01 = FramedSprite("sample_expression01_cropped", borderSize(5, 5), background="sprite_background", border="sprite_border")
+    image sample expression01 = SpriteCutout("sample_expression01", borderSize(5, 5), background="sprite_background", border="sprite_border", x=125, y=60, width=350, height=820, enter_dir='right', exit_dir="right")
 
 Normally, only the image name of the character sprite needs to be supplied.
 
@@ -23,6 +23,10 @@ The borderSize is the horizontal and vertical widths of the border, respectively
 Since the container is intended to be used using images with its own ATL event handlers, it is advised to also use ATL event handlers when defining transition such as dissolve instead of "with" statement, or a double of the image may appear instead when transitioning. This is particularly noticeable when using "with dissolve" on hide statement or show statement to replace the image at different position.
 
 Please note the container is designed under the main aim to enable event handling in the "children" components - namely the character sprite and the frame bodies, which is normally cannot be done when using the container usually used for ATL (the Fixed() class). While the current version of the code has successfully achieved said aim, further improvements may be required.
+
+## Current issues
+- When using the `with Pause()` command below the command to hide the displayable, the displayable won't trigger the hide transition during rollback/roll-forward. However, the hide transition works just fine when using `renpy.pause()` instead.
+- The SpriteCutout class assumes an ATL transform for handling enter/exit transition is already defined globally.
 
 ## Closing
 Some parts of the code are taken and modified from Ren'Py Transform() class.
